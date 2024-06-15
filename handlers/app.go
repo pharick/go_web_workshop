@@ -1,6 +1,10 @@
 package handlers
 
-import "net/http"
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
 type App struct {
 	router    *http.ServeMux
@@ -14,4 +18,13 @@ func NewApp() *App {
 		router:    http.NewServeMux(),
 		templates: NewTemplates(),
 	}
+}
+
+func (a *App) RegisterHandler(url string, handler http.HandlerFunc) {
+	a.router.HandleFunc(url, handler)
+}
+
+func (a *App) Serve(port int) {
+	log.Printf("Server started on port %d\n", port)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), a.router)
 }

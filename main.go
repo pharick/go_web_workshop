@@ -1,23 +1,18 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/pharick/cool_app/handlers"
 )
 
 func main() {
 	app := handlers.NewApp()
 
-	// create a router
-	r := http.NewServeMux()
-
 	// register the handler
-	r.HandleFunc("/{$}", app.Index)
-	r.HandleFunc("/about", app.About)
+	app.RegisterHandler("/{$}", app.Index)
+	app.RegisterHandler("/about", app.About)
+	app.RegisterHandler("/users", app.Users)
+	app.RegisterHandler("/users/{username}", app.User)
 
 	// start the server
-	log.Printf("Server started on port 3000\n")
-	http.ListenAndServe(":3000", r)
+	app.Serve(3000)
 }
