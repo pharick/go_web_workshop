@@ -18,4 +18,4 @@ RUN go build -o /bin/app main.go
 CMD ["/bin/app"]
 
 # docker build -t coolapp:latest .
-# docker run -p 3000:3000 coolapp:latest 
+# docker run -p 3000:3000 coolapp:latest
